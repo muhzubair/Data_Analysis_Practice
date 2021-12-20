@@ -35,3 +35,25 @@ FROM PortfolioProject..['covid deaths']
 WHERE continent IS NOT NULL 
 GROUP BY location
 order by Total_Death_Count desc
+
+-- Countries with highest death count
+SELECT continent, MAX(cast(total_deaths AS int)) AS Total_Death_Count
+FROM PortfolioProject..['covid deaths']
+WHERE continent IS NOT NULL 
+GROUP BY continent
+order by Total_Death_Count desc
+
+-- Global numbers everyday
+SELECT date, SUM(new_cases) AS Total_Cases, SUM(CAST(new_deaths AS int)) AS Total_Deaths, SUM(CAST(new_deaths AS int))/SUM(new_cases)*100 
+AS Death_Percentage
+FROM PortfolioProject..['covid deaths']
+WHERE continent IS NOT NULL 
+GROUP BY date
+order by 1,2
+
+-- Global numbers
+SELECT SUM(new_cases) AS Total_Cases, SUM(CAST(new_deaths AS int)) AS Total_Deaths, SUM(CAST(new_deaths AS int))/SUM(new_cases)*100 
+AS Death_Percentage
+FROM PortfolioProject..['covid deaths']
+WHERE continent IS NOT NULL 
+order by 1,2 
